@@ -1,3 +1,4 @@
+import re
 names = []
 ages = []
 order = []
@@ -6,7 +7,7 @@ size_pizza_17 = []
 pizza_18 = []
 pizza_17 = []
 total_price = []
-
+number = []
 def menu_18(): #в этой функции мы создаём меню 18+
     print("Вы хотите заказать уже созданую или свою")
     while True:
@@ -22,6 +23,7 @@ def menu_18(): #в этой функции мы создаём меню 18+
             while True:
                 menu2 = input()
                 if menu2 == "пеперони":
+                    order.append("пицца пеперони")
                     while True:
                         print("Какой размер вы хотите 15, 20, 25 или 30")
                         size_18 = int(input())
@@ -42,6 +44,7 @@ def menu_18(): #в этой функции мы создаём меню 18+
                             continue
                     order.append(menu2)
                 elif menu2 == "гавайская":
+                    order.append("пицца гавайская")
                     while True:
                         print("Какой размер вы хотите 15, 20, 25 или 30")
                         size_18 = int(input())
@@ -63,6 +66,7 @@ def menu_18(): #в этой функции мы создаём меню 18+
                     order.append(menu2)
                     break
                 elif menu2 == "сырная":
+                    order.append("пицца сырная")
                     while True:
                         print("Какой размер вы хотите 15, 20, 25 или 30")
                         size_18 = int(input())
@@ -81,7 +85,6 @@ def menu_18(): #в этой функции мы создаём меню 18+
                         else:
                             print("Введите заново")
                             continue
-                    order.append(menu2)
                     break
                 else:
                     print("Введите 'пеперони', 'гавайская' или 'сырная'")
@@ -147,6 +150,7 @@ def menu_17():
               "сырная \n")
         menu_17_pizza = input()
         if menu_17_pizza == "пеперони":
+            order.append("пицца пеперони")
             print("Какой размер пиццы")
             while fl:
                 print("15 или 20 см")
@@ -162,6 +166,7 @@ def menu_17():
                     continue
             break
         elif menu_17_pizza == "гавайская":
+            order.append("гавайская пицца")
             print("Какой размер пиццы")
             while fl:
                 size_17 = int(input())
@@ -177,6 +182,7 @@ def menu_17():
                     continue
             break
         elif menu_17_pizza == "сырная":
+            order.append("сырная пицца")
             print("Какой размер пиццы")
             while fl:
                 print("15 или 20 см")
@@ -191,7 +197,6 @@ def menu_17():
                     print("Введите заново")
                     continue
             break
-print("Введите ваше фамилию, имя, отчество")
 def drinks_18():
     print("Вы хотите напитки?(-ок)")
     drink = input()
@@ -275,123 +280,240 @@ def verefy_order_17():
             delsoradd = int(input())
             if delsoradd == 2:
                 def dels_17():
-                    try:
-                        f2 = True
-                        while f2:
-                            delses = input()
-                            if delses == "сок":
-                                order.remove("сок")
-                                break
-                            elif delses == "вода":
-                                order.remove("вода")
-                                break
-                            elif delses == "минеральная вода":
-                                order.remove("минеральная вода")
-                                break
-                            elif delses == "чай":
-                                order.remove("чай")
-                                break
-                        print("Вы хотите ещё чтото убрать? 1 - да; 2 - нет (выбрать цифру)")
-                        while f2:
+                        print("Что вы хотите убрать")
+                        try:
+                            f2 = True
+                            while f2:
+                                delses = input()
+                                if delses == "сок":
+                                    order.remove("сок")
+                                    break
+                                elif delses == "вода":
+                                    order.remove("вода")
+                                    break
+                                elif delses == "минеральная вода":
+                                    order.remove("минеральная вода")
+                                    break
+                                elif delses == "чай":
+                                    order.remove("чай")
+                                    break
+                                elif delses == "пицца пеперони":
+                                    order.remove("пицца пеперони")
+                                    break
+                                elif delses == "пицца гавайская":
+                                    order.remove("пицца гавайская")
+                                    break
+                                elif delses == "пицца сырная":
+                                    order.remove("пицца сырная")
+                                    break
+                                else:
+                                    continue
+                            print("Вы хотите ещё чтото убрать? 1 - да; 2 - нет (выбрать цифру)")
                             stop = int(input())
                             if stop == 2:
-                                break
+                                f2 = False
                             elif stop == 1:
-                                continue
-                            else:
-                                continue
-                    except 2:
-                        f2 = False
-                        print("Сейчас подсчитаем итогувую цену")
-
+                                f2 = True
+                        except 2:
+                            print("Сейчас подсчитаем итогувую цену")
+                            f2 = False
                 dels_17()
             elif delsoradd == 1:
-                print("Что вы хотите добавить")
+                print("Что вы хотите добавить \n"
+                      "пиццу: \n"
+                      "пеперони - 1 \n"
+                      "гавайская - 2 \n"
+                      "сырная - 3 \n"
+                      "напиток: \n"
+                      "сок - 4 \n"
+                      "вода - 5 \n"
+                      "минеральная вода - 6 \n"
+                      "чай - 7 \n")
                 def add():
-                    while True:
-                        print("пицца или напиток?")
-                        a = input()
-                        if a == "пицца":
-                            def add_1():
-                                try:
-                                    while True:
-                                        print("Какую пиццу вы хотите? \n"
-                                              "пеперони \n"
-                                              "гавайская \n"
-                                              "сырная \n")
-                                        add_1 = input()
-                                        if add_1 == "пеперони":
-                                            order.append("пеперони")
-                                            break
-                                        elif add_1 == "гавайская":
-                                            order.append("гавайская")
-                                            break
-                                        elif add_1 == "сырная":
-                                            order.append("сырная")
-                                            break
-                                        else:
-                                            continue
-                                    while True:
-                                        print("Хотите ещё добавить пиццу? 1 - да; 2 - нет")
-                                        stops = int(input())
-                                        if stops == 1:
-                                            continue
-                                        elif stops == 2:
-                                            break
-                                        else:
-                                            continue
-                                except 2:
-                                    f4 = False
-                            add_1()
-                            break
-                        elif a == "напиток":
-                            def add_2():
-                                try:
-                                    while True:
-                                        print("1 - сок \n"
-                                      "2 - вода \n"
-                                      "3 - минеральная вода \n"
-                                      "4 - чай \n ")
-                                        b = int(input())
-                                        if b == 1:
-                                            order.append("сок")
-                                            break
-                                        elif b == 2:
-                                            order.append("вода")
-                                            break
-                                        elif b == 3:
-                                            order.append("минеральная вода")
-                                            break
-                                        elif b == 4:
-                                            order.append("чай")
-                                            break
-                                        else:
-                                            continue
-                                        while True:
-                                            print("Вы хотите ещё что-то добавить? 1 - да; 2 - нет")
-                                            stoping = int(input())
-                                            if stoping == 1:
-                                                continue
-                                            elif stoping == 2:
-                                                break
-                                            else:
-                                                continue
-                                except 2:
-                                    f5 = False
-                            add_2()
-                            break
-                        else:
-                            continue
+                    try:
+                        while True:
+                            add_1 = int(input())
+                            if add_1 == 1:
+                                    order.append("пеперони")
+                                    break
+                            elif add_1 == 2:
+                                    order.append("гавайская")
+                                    break
+                            elif add_1 == 3:
+                                    order.append("сырная")
+                                    break
+                            elif add_1 == 4:
+                                    order.append("сок")
+                                    break
+                            elif add_1 == 5:
+                                    order.append("вода")
+                                    break
+                            elif add_1 == 6:
+                                    order.append("минеральная вода")
+                                    break
+                            elif add_1 == 7:
+                                    order.append("чай")
+                                    break
+                            else:
+                                    continue
+                        print("Хотите ещё что-то добавить 1 - да; 2 - нет")
+                        stops = int(input())
+                        if stops == 1:
+                            f4 = True
+                        elif stops == 2:
+                            f4 = False
+                    except 2:
+                        f4 = False
                 add()
             break
         else:
             print("Всё верно 'да' или 'нет' ")
             continue
-def name(): #в функции запрашивает имя
-    name = input()
-    names.append(name)
-name()
-print("Какой ваш возврост?")
+def verefy_order_18():
+    while True:
+        print(f"Верно ли наш официант всё записали? {order} 1 - да; 2 - нет")
+        choice = int(input())
+        if choice == 1:
+            break
+        elif choice == 2:
+            while True:
+                print("Вы хотите удалить или добавить? 1 - удалить; 2 - добавить")
+                choice1 = int(input())
+                if choice1 == 1:
+                    try:
+                        while True:
+                            print("Выберите что вы хотите удалить(введите цифру) \n"
+                                  " Пицца пеперони - 1 \n"
+                                  "Гавайская пицца - 2 \n"
+                                  "Сырная пицца - 3 \n"
+                                  "Кола - 4, \n"
+                                  "Сок - 5, \n"
+                                  "Спрайт - 6, \n"
+                                  "Фанта - 7 \n")
+                            choice3 = int(input())
+                            if choice3 == 1:
+                                order.remove("пицца пеперони")
+                                break
+                            elif choice3 == 2:
+                                order.remove("гавайская пицца")
+                                break
+                            elif choice3 == 3:
+                                order.remove("сырная пицца")
+                                break
+                            elif choice3 == 4:
+                                order.remove("кола")
+                                break
+                            elif choice3 == 5:
+                                order.remove("сок")
+                                break
+                            elif choice3 == 6:
+                                order.remove("спрайт")
+                                break
+                            elif choice3 == 7:
+                                order.remove("фанта")
+                                break
+                            else:
+                                print("Введите заново")
+                                continue
+                        print("Вы хотите ещё что то удалить? 1 = да хочу 2 = нет не хочу")
+                        choice4 = int(input())
+                        if choice4 == 1:
+                            fl = True
+                        elif choice4 == 2:
+                            fl = False
+                    except 2:
+                        fl = False
+                    break
+                elif choice1 == 2:
+                    try:
+                        while True:
+                            print("Выберите что вы хотите удалить(введите цифру) \n"
+                                    "Пицца пеперони - 1 \n"
+                                    "Гавайская пицца - 2 \n"
+                                    "Сырная пицца - 3 \n"
+                                    "Кола - 4, \n"
+                                    "Сок - 5, \n"
+                                    "Спрайт - 6, \n"
+                                    "Фанта - 7 \n")
+                            choice5 = int(input())
+                            if choice3 == 1:
+                                order.remove("пицца пеперони")
+                                break
+                            elif choice3 == 2:
+                                order.remove("гавайская пицца")
+                                break
+                            elif choice3 == 3:
+                                order.remove("сырная пицца")
+                                break
+                            elif choice3 == 4:
+                                order.remove("кола")
+                                break
+                            elif choice3 == 5:
+                                order.remove("сок")
+                                break
+                            elif choice3 == 6:
+                                order.remove("спрайт")
+                                break
+                            elif choice3 == 7:
+                                order.remove("фанта")
+                                break
+                            else:
+                                print("Введите заново")
+                                continue
+                        fl = True
+                        while fl:
+                            print("Вы хотите ещё что то удалить? 1 = да хочу 2 = нет не хочу")
+                            choice4 = int(input())
+                            if choice4 == 1:
+                                fl = True
+                            elif choice4 == 2:
+                                fl = False
+                    except 2:
+                        fl = False
+                    break
+                else:
+                    continue
+            break
+        else:
+            continue
+def validate_fio_simple(fio):
+    pattern = r'^[А-ЯЁ][а-яё]+\s+[А-ЯЁ][а-яё]+\s+[А-ЯЁ][а-яё]+$'
+    return bool(re.match(pattern, fio.strip()))
+def get_fio_input():
+    while True:
+        fio = input("Введите ФИО (Фамилия Имя Отчество): ").strip()
+        if validate_fio_simple(fio):
+            return fio
+        else:
+            print("Ошибка! Неправильный формат ФИО.")
+            print("Пример правильного формата: Иванов Иван Иванович")
+            print("Пожалуйста, попробуйте снова.\n")
+# Использование
+fio = get_fio_input()
+def verefy_number(phone):
+    cleaned_phone = re.sub(r'[^\d+]', '', phone)
+    patterns = [
+        r'^\+7\d{10}$',
+        r'^8\d{10}$',
+        r'^7\d{10}$',
+    ]
+    for pattern in patterns:
+        if re.match(pattern, cleaned_phone):
+            return True, cleaned_phone
+    return False, "Неверный формат номера"
+# Простой цикл проверки
+while True:
+    phone = input("Введите номер телефона: ")
+    is_valid, result = verefy_number(phone)
+    if is_valid:
+        number.append(phone)
+        break
+    else:
+        print(f"Ошибка: {result}")
+        print("Примеры правильных форматов: +79123456789, 89123456789")
+        print("Попробуйте еще раз...")
+        continue
+print("Какой ваш возвраст?")
 def age():
     while True:
         age = int(input())
@@ -410,21 +532,53 @@ def age():
             menu_18()
             drinks_18()
             print(order)
-            verefy_order()
+            verefy_order_18()
             break
         else:
             print("Введите сколько вам лет")
 age()
-def mathorder():
-    f"ketchup: {100}"
-    f"chesse = {100}"
-    f"pineapples = {150}"
-    f"meat = {150}"
-    f"dough = {200}"
-    f"serfdom = {50}"
-    f"sprite = {100}"
-    f"coco_cola {100}"
-    f"juice = {100}"
-
-    print(total_price)
-mathorder()
+def select(func):
+    def wrapper(order):
+        values, total = func(order)
+        # Выводим каждый элемент заказа с его стоимостью
+        for i, item in enumerate(order):
+            print("-" * 24)
+            if isinstance(item, (int, float)):
+                print(f"{item} = {values[i]}")
+            else:
+                print(f"{item} = {values[i]}")
+            print("-" * 24)
+        # Выводим итоговую сумму
+        print("-" * 24)
+        print(f"итоговая цена = {total}")
+        print("-" * 24)
+        return values, total
+    return wrapper
+@select
+def mathorder_my_pizza(order):
+    values = {
+        'пицца пеперони': 200,
+        'сырная пицца': 200,
+        'гавайская пицца': 200,
+        'сок': 100,
+        'чай': 100,
+        'вода': 50,
+        'минеральная вода': 55,
+        'фанта': 70,
+        'кола': 70,
+        'спрайт': 70
+    }
+    result = []  # Список для хранения чисел
+    total_sum = 0
+    for item in order:
+        try:
+            num = float(item)
+            result.append(num)
+            total_sum += num  # Добавляем к сумме
+        except (ValueError, TypeError):
+            if isinstance(item, str) and item.lower() in values:
+                value = values[item.lower()]
+                result.append(value)
+                total_sum += value  # Добавляем к сумме
+    return result, total_sum  # Возвращаем и список, и сумму
+result = mathorder_my_pizza(order)
